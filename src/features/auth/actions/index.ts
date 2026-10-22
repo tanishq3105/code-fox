@@ -4,7 +4,7 @@ import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { DEFAULT_AUTH_CALLBACK, SIGN_IN_PATH } from "../utils";
-
+import { cache } from "react";
 export async function signInWithGithub() {
   const result = await auth.api.signInSocial({
     body: {
@@ -19,11 +19,9 @@ export async function signInWithGithub() {
   }
 }
 
-export async function getServerSession() {
-  return auth.api.getSession({
-    headers: await headers(),
-  });
-}
+export const getServerSession = cache(async () => {
+  return auth.api.getSession({ headers: await headers() });
+});
 
 export async function requireAuth(redirect_to = SIGN_IN_PATH) {
   const session = await getServerSession();

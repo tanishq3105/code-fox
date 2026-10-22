@@ -4,21 +4,16 @@ import { SiGithub } from "@icons-pack/react-simple-icons";
 import { useFormStatus } from "react-dom";
 import { TextMorph } from "torph/react";
 import { signInWithGithub } from "../actions";
+
 function SubmitButton() {
   const { pending } = useFormStatus();
 
-  let buttonLabel = "Continue with Github";
-  let icon = <SiGithub />;
-
-  if (pending) {
-    buttonLabel = "Redirecting to Github";
-    icon = <Spinner />;
-  }
-
   return (
     <Button type="submit" disabled={pending}>
-      {icon}
-      <TextMorph>{buttonLabel}</TextMorph>
+      {pending ? <Spinner /> : <SiGithub />}
+      <TextMorph>
+        {pending ? "Redirecting to Github" : "Continue with Github"}
+      </TextMorph>
     </Button>
   );
 }
