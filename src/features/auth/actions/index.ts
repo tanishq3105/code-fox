@@ -5,6 +5,7 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { DEFAULT_AUTH_CALLBACK, SIGN_IN_PATH } from "../utils";
 import { cache } from "react";
+import { authClient } from "@/lib/auth-client";
 export async function signInWithGithub() {
   const result = await auth.api.signInSocial({
     body: {
@@ -34,6 +35,15 @@ export async function requireAuth(redirect_to = SIGN_IN_PATH) {
 export async function requireUnauth(redirect_to = DEFAULT_AUTH_CALLBACK) {
   const session = await getServerSession();
   if (session) {
+    redirect(redirect_to);
+  }
+}
+
+export async function handleLogout(redirect_to = SIGN_IN_PATH) {
+  const result = await auth.api.signOut({
+    headers: await headers(),
+  });
+  if (result.success) {
     redirect(redirect_to);
   }
 }
