@@ -30,9 +30,15 @@ import {
   Database01Icon,
   Analytics01Icon,
   CommandIcon,
+  PullRequest,
+  Github,
+  Settings,
+  RepositoryIcon,
+  RepositoryFreeIcons,
 } from "@hugeicons/core-free-icons";
 import { authClient } from "@/lib/auth-client";
 import Image from "next/image";
+import { DASHBOARD_ROUTES } from "@/features/dashboard/lib/routes";
 
 const data = {
   user: {
@@ -42,111 +48,29 @@ const data = {
   },
   navMain: [
     {
-      title: "Dashboard",
-      url: "#",
+      title: "Overview",
+      url: DASHBOARD_ROUTES.overview,
       icon: <HugeiconsIcon icon={DashboardSquare01Icon} strokeWidth={2} />,
     },
     {
-      title: "Lifecycle",
-      url: "#",
-      icon: <HugeiconsIcon icon={Menu01Icon} strokeWidth={2} />,
+      title: "Repositories",
+      url: DASHBOARD_ROUTES.repo,
+      icon: <HugeiconsIcon icon={RepositoryFreeIcons} strokeWidth={2} />,
     },
     {
-      title: "Analytics",
-      url: "#",
-      icon: <HugeiconsIcon icon={ChartHistogramIcon} strokeWidth={2} />,
+      title: "Pull Requests",
+      url: DASHBOARD_ROUTES.pullRequest,
+      icon: <HugeiconsIcon icon={PullRequest} strokeWidth={2} />,
     },
     {
-      title: "Projects",
-      url: "#",
-      icon: <HugeiconsIcon icon={Folder01Icon} strokeWidth={2} />,
+      title: "Github App",
+      url: DASHBOARD_ROUTES.github,
+      icon: <HugeiconsIcon icon={Github} strokeWidth={2} />,
     },
-    {
-      title: "Team",
-      url: "#",
-      icon: <HugeiconsIcon icon={UserGroupIcon} strokeWidth={2} />,
-    },
-  ],
-  navClouds: [
-    {
-      title: "Capture",
-      icon: <HugeiconsIcon icon={Camera01Icon} strokeWidth={2} />,
-      isActive: true,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Proposal",
-      icon: <HugeiconsIcon icon={File01Icon} strokeWidth={2} />,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Prompts",
-      icon: <HugeiconsIcon icon={File01Icon} strokeWidth={2} />,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
-    },
-  ],
-  navSecondary: [
     {
       title: "Settings",
-      url: "#",
-      icon: <HugeiconsIcon icon={Settings05Icon} strokeWidth={2} />,
-    },
-    {
-      title: "Get Help",
-      url: "#",
-      icon: <HugeiconsIcon icon={HelpCircleIcon} strokeWidth={2} />,
-    },
-    {
-      title: "Search",
-      url: "#",
-      icon: <HugeiconsIcon icon={SearchIcon} strokeWidth={2} />,
-    },
-  ],
-  documents: [
-    {
-      name: "Data Library",
-      url: "#",
-      icon: <HugeiconsIcon icon={Database01Icon} strokeWidth={2} />,
-    },
-    {
-      name: "Reports",
-      url: "#",
-      icon: <HugeiconsIcon icon={Analytics01Icon} strokeWidth={2} />,
-    },
-    {
-      name: "Word Assistant",
-      url: "#",
-      icon: <HugeiconsIcon icon={File01Icon} strokeWidth={2} />,
+      url: DASHBOARD_ROUTES.settings,
+      icon: <HugeiconsIcon icon={Settings} strokeWidth={2} />,
     },
   ],
 };
@@ -179,8 +103,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavDocuments items={data.documents} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />

@@ -1,8 +1,4 @@
-"use client";
 import { cn } from "cn";
-
-import { Button } from "@/components/ui/button";
-import { SiGithub } from "@icons-pack/react-simple-icons";
 import {
   Card,
   CardContent,
@@ -18,10 +14,16 @@ import {
   FieldSet,
 } from "@/components/ui/field";
 import { GithubSignInForm } from "@/features/auth/components/github-sign-in-form";
-export function SignupForm({
+
+interface SignUpForm extends React.ComponentProps<"div"> {
+  callbackUrl: string;
+}
+
+export async function SignupForm({
   className,
+  callbackUrl,
   ...props
-}: React.ComponentProps<"div">) {
+}: SignUpForm) {
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -35,7 +37,7 @@ export function SignupForm({
           <FieldSet>
             <FieldGroup>
               <Field>
-                <GithubSignInForm></GithubSignInForm>
+                <GithubSignInForm callbackUrl={callbackUrl}></GithubSignInForm>
                 <FieldDescription className="text-center">
                   We only request the permissions to identify your account. You
                   can revoke access anytime from setting

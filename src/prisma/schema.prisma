@@ -1,7 +1,6 @@
-
 generator client {
   provider = "prisma-client"
-  output = "../generated"
+  output   = "../generated"
 }
 
 datasource db {
@@ -9,18 +8,32 @@ datasource db {
 }
 
 model User {
-  id            String    @id
-  name          String
-  email         String
-  emailVerified Boolean   @default(false)
-  image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  sessions      Session[]
-  accounts      Account[]
+  id                 String              @id
+  name               String
+  email              String
+  emailVerified      Boolean             @default(false)
+  image              String?
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  sessions           Session[]
+  accounts           Account[]
+  githubInstallation GithubInstallation?
 
   @@unique([email])
   @@map("user")
+}
+
+model GithubInstallation {
+  id             String   @id @default(cuid())
+  userId         String   @unique
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  installationId Int // GitHub's numeric installation id — passed to app.getInstallationOctokit()
+  accountLogin   String?
+  accountType    String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@map("github_installation")
 }
 
 model Session {
@@ -69,4 +82,14 @@ model Verification {
 
   @@index([identifier])
   @@map("verification")
+}
+
+model GithubInstallState {
+  id        String   @id @default(cuid())
+  state     String   @unique
+  userId    String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@map("github_installation_state")
 }

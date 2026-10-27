@@ -3,14 +3,22 @@
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { DEFAULT_AUTH_CALLBACK, SIGN_IN_PATH } from "../utils";
+import {
+  DEFAULT_AUTH_CALLBACK,
+  getSafeCallbackPath,
+  SIGN_IN_PATH,
+} from "../utils";
 import { cache } from "react";
 import { authClient } from "@/lib/auth-client";
-export async function signInWithGithub() {
+export async function signInWithGithub(formData: FormData) {
+  const callback = formData.get("callback");
+  const redirectTo = getSafeCallbackPath(
+    typeof callback === "string" ? callback : null,
+  );
   const result = await auth.api.signInSocial({
     body: {
       provider: "github",
-      callbackURL: "/dashboard",
+      callbackURL: redirectTo,
     },
     headers: await headers(),
   });
